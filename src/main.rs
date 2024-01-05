@@ -4,6 +4,8 @@ use std::path::PathBuf;
 
 use atty::Stream;
 use glob::Pattern;
+use std::fs::{File};
+use std::io::{BufReader, Read};
 mod dirdiff;
 
 #[derive(Parser)]
@@ -50,6 +52,24 @@ impl Args {
         }
         Err(errors.join("\n"))
     }
+    pub fn parse_ignore_file(path: PathBuf) -> Vec<Pattern> {
+        let file = File::open(path).expect("Error opening ignore file");
+        let mut reader = BufReader::new(file);
+
+        let mut patterns = Vec::new();
+        let mut file_contents: String = String::new();
+        _ = reader.read_to_string(&mut file_contents);
+        for line in file_contents.lines() {
+            if line.trim().is_empty() || line.starts_with('#') {
+                continue;
+            }
+            match Pattern::new(&line) {
+                Ok(pattern) => patterns.push(pattern),
+                Err(e) => eprintln!("Invalid pattern in ignore file, line - '{}': {}", line, e),
+            }
+        }
+        patterns
+    }
 }
 
 fn main() {
@@ -60,7 +80,21 @@ fn main() {
         Ok(()) => {}
     };
 
-    let dir_comparator = dirdiff::DirCmp::new(&args.dir_a, &args.dir_b, &args.ignore_patterns);
+    let ignore_file_patterns = match args.ignore_file {
+        Some(file) => Some(Args::parse_ignore_file(file)),
+        _ => None
+    };
+
+    let merged_patterns = match (ignore_file_patterns, args.ignore_patterns) {
+        (Some(mut vec1), Some(vec2)) => {
+            vec1.extend(vec2);
+            Some(vec1)
+        },
+        (Some(vec), None) | (None, Some(vec)) => Some(vec),
+        (None, None) => None,
+    };
+
+    let dir_comparator = dirdiff::DirCmp::new(&args.dir_a, &args.dir_b, &merged_patterns);
     let result = dir_comparator.compare_directories();
     let text = if atty::is(Stream::Stdout) {
         result.format_text(!args.no_colors)
