@@ -32,7 +32,7 @@ impl Hash {
 }
 
 #[derive(Debug)]
-pub struct FileInfo {
+struct FileInfo {
     hash: Hash,
 }
 
@@ -42,7 +42,21 @@ impl FileInfo {
     }
 }
 
-pub fn dirdiff(path_a: &PathBuf, path_b: &PathBuf) {
+pub struct CmpResult {
+    pub only_in_a : Vec<PathBuf>,
+    pub only_in_b: Vec<PathBuf>,
+    pub differs : Vec<PathBuf>,
+}
+
+impl CmpResult {
+    pub fn new() -> CmpResult {
+        CmpResult { only_in_a: Vec::new(),
+                    only_in_b: Vec::new(),
+                    differs: Vec::new() }
+    }
+}
+
+pub fn dirdiff(path_a: &PathBuf, path_b: &PathBuf) -> CmpResult {
     let path_a_clone = path_a.clone();
     let path_b_clone = path_b.clone();
 
@@ -56,6 +70,7 @@ pub fn dirdiff(path_a: &PathBuf, path_b: &PathBuf) {
     
     let map1 : HashMap<PathBuf, FileInfo> = thread_a.join().unwrap().ok().unwrap();
     let map2 : HashMap<PathBuf, FileInfo> = thread_b.join().unwrap().ok().unwrap();
+    let mut result : CmpResult = CmpResult::new();
 
     for item in &map1 {
         if map2.contains_key(item.0) {
@@ -69,18 +84,19 @@ pub fn dirdiff(path_a: &PathBuf, path_b: &PathBuf) {
                 Hash::Invalid { error } => error,
             };
             if hash1 != hash2 {
-                println!("{:?}  differs", item.0);
+                result.differs.push(item.0.clone());
             }
         }
         else {
-            println!("{:?} appears only in A", item.0);
+            result.only_in_a.push(item.0.clone());
         }
     }
     for item in &map2 {
         if !map1.contains_key(item.0) {
-            println!("{:?} appears only in B", item.0);
+            result.only_in_b.push(item.0.clone());
         }
     }
+    result
 }
 
 fn process_directory(path: &PathBuf) -> Result<HashMap<PathBuf, FileInfo>, String> {
