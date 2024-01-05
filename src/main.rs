@@ -2,8 +2,8 @@ use clap::Parser;
 use core::panic;
 use std::path::PathBuf;
 
-use ansi_term::{Style, Colour::*};
-
+use atty::Stream;
+use glob::Pattern;
 mod dirdiff;
 
 #[derive(Parser)]
@@ -16,10 +16,13 @@ struct Args {
     dir_b: PathBuf,
 
     #[clap(long = "ignore", value_parser, use_value_delimiter(true), value_delimiter = ' ', num_args=1..)]
-    ignore_pattern: Option<Vec<String>>,
+    ignore_patterns: Option<Vec<Pattern>>,
 
     #[clap(long = "ignore-file", value_parser)]
     ignore_file: Option<PathBuf>,
+
+    #[clap(long = "no-colors", value_parser)]
+    no_colors: bool,
 }
 
 impl Args {
@@ -57,46 +60,14 @@ fn main() {
         Ok(()) => {}
     };
 
-    let result = dirdiff::dirdiff(&args.dir_a, &args.dir_b);
-
-    let bold = Style::new().bold();
-    let bold_underline = bold.underline();
-
-    println!();
-    if result.only_in_a.is_empty() && result.only_in_b.is_empty() && result.differs.is_empty() {
-        let styled_message = bold.
-            paint(format!("The directories appear to be the same"));
-        println!("{}", styled_message);
-        return;
+    let dir_comparator = dirdiff::DirCmp::new(&args.dir_a, &args.dir_b, &args.ignore_patterns);
+    let result = dir_comparator.compare_directories();
+    let text = if atty::is(Stream::Stdout) {
+        result.format_text(!args.no_colors)
+    } else {
+        result.format_text(false)
+    };
+    for item in text {
+        print!("{}", item);
     }
-
-    if !result.only_in_a.is_empty() {
-        let styled_message = bold_underline.fg(Yellow)
-            .paint(format!("Files that appear only in {}", args.dir_a.to_str().unwrap()));
-        println!("{}", styled_message);
-        for item in &result.only_in_a {
-            println!("{}", item.to_str().unwrap());
-        }
-        println!();
-    }
-
-    if !result.only_in_b.is_empty() {
-        let styled_message = bold_underline.fg(Yellow)
-            .paint(format!("Files that appear only in {}", args.dir_b.to_str().unwrap()));
-        println!("{}", styled_message);
-        for item in &result.only_in_b {
-            println!("{}", item.to_str().unwrap());
-        }
-        println!();
-    }
-
-    if !result.only_in_b.is_empty() {
-        let styled_message = bold_underline.fg(Red)
-            .paint(format!("Files that differ"));
-        println!("{}", styled_message);
-        for item in &result.differs {
-            println!("{}", item.to_str().unwrap());
-        }
-    }
-    println!();
 }
