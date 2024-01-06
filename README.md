@@ -6,6 +6,22 @@ A command line tool to compare two directories.
 
 Uses hashes to compares files with the same name. Also lists the unique files for both directories.
 
+## Installation
+
+If you don't have rust installed, go ahead and [Install Rust](https://www.rust-lang.org/tools/install)
+
+Clone this repository
+
+```
+git clone git@github.com:VaheDanielyan/diffdir.git
+```
+
+Build and install
+
+```
+cargo install --path .
+```
+
 ## Usage
 
 ```
@@ -26,7 +42,7 @@ OPTIONS
        <DIR_A>
        <DIR_B>
 VERSION
-       v0.4.0
+       v0.4.1
 AUTHORS
        Vahe Danielyan <danielyan.vahe@gmail.com>
 
