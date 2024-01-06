@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use atty::Stream;
 use glob::Pattern;
-use std::fs::{File};
+use std::fs::File;
 use std::io::{BufReader, Read};
 mod dirdiff;
 
