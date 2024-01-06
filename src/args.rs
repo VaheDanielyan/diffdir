@@ -20,6 +20,9 @@ pub struct Args {
     #[clap(long = "ignore-file", value_parser)]
     pub ignore_file: Option<PathBuf>,
 
+    #[clap(short = 'q', value_parser)]
+    pub quiet: bool,
+
     #[clap(long = "no-colors", value_parser)]
     pub no_colors: bool,
 }
