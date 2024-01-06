@@ -4,6 +4,7 @@ version = "0.3.0"
 edition = "2021"
 authors = ["Vahe Danielyan <danielyan.vahe@gmail.com>"]
 license = "MIT"
+description = "deep compare two directories for differences"
 repository = "https://github.com/VaheDanielyan/dircmp/"
 categories = ["command-line-interface", "command-line-utilities"]
 keywords = ["diff", "compare", "cli", "input", "terminal"]
