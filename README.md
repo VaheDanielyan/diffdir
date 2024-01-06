@@ -1,4 +1,5 @@
-![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) ![https://google.com](https://img.shields.io/crates/v/diffdir)
+![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) ![https://google.com](https://img.shields.io/crates/v/diffdir?link=https%3A%2F%2Fcrates.io%2Fcrates%2Fdiffdir) [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
+
 
 # Diffdir
 
