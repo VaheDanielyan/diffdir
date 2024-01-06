@@ -6,6 +6,7 @@ authors = ["Vahe Danielyan <danielyan.vahe@gmail.com>"]
 license = "MIT"
 description = "deep compare two directories for differences"
 repository = "https://github.com/VaheDanielyan/diffdir/"
+documentation = "https://docs.rs/crate/ddiff/"
 categories = ["command-line-interface", "command-line-utilities"]
 keywords = ["diff", "compare", "cli", "input", "terminal"]
 readme = "README.md"

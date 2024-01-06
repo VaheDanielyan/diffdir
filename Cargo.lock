@@ -160,7 +160,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dircmp"
+name = "diffdir"
 version = "0.3.0"
 dependencies = [
  "ansi_term",
