@@ -3,7 +3,7 @@ extern crate diffdir;
 use core::panic;
 use atty::Stream;
 
-use diffdir::diffcmp::{CmpResult, DirCmp};
+use diffdir::diffcmp::{DirCmp, CmpResult};
 use diffdir::args::Args;
 
 use clap::Parser;

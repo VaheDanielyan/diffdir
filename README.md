@@ -12,19 +12,19 @@ If you don't have rust installed, go ahead and [Install Rust](https://www.rust-l
 
 Clone this repository
 
-```
+```sh
 git clone git@github.com:VaheDanielyan/diffdir.git
 ```
 
 Build and install
 
-```
+```sh
 cargo install --path .
 ```
 
 ## Usage
 
-```
+```sh
 NAME
        diffdir - A cli tool to compare two directories
 SYNOPSIS
@@ -41,8 +41,6 @@ OPTIONS
               Print version
        <DIR_A>
        <DIR_B>
-VERSION
-       v0.4.2
 AUTHORS
        Vahe Danielyan <danielyan.vahe@gmail.com>
 
