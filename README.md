@@ -42,7 +42,7 @@ OPTIONS
        <DIR_A>
        <DIR_B>
 VERSION
-       v0.4.1
+       v0.4.2
 AUTHORS
        Vahe Danielyan <danielyan.vahe@gmail.com>
 
