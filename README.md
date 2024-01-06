@@ -24,24 +24,21 @@ cargo install --path .
 ## Usage
 
 ```sh
-NAME
-       diffdir - A cli tool to compare two directories
-SYNOPSIS
-       diffdir [--ignore] [--ignore-file] [--no-colors] [-h|--help] [-V|--version] <DIR_A> <DIR_B>
-DESCRIPTION
-       A cli tool to compare two directories
-OPTIONS
-       --ignore=IGNORE_PATTERNS
-       --ignore-file=IGNORE_FILE
-       --no-colors
-       -h, --help
-              Print help
-       -V, --version
-              Print version
-       <DIR_A>
-       <DIR_B>
-AUTHORS
-       Vahe Danielyan <danielyan.vahe@gmail.com>
+Usage: diffdir [OPTIONS] <dir a> <dir b>
 
+Arguments:
+  <dir a>
+  <dir b>
+
+Options:
+      --ignore <IGNORE_PATTERNS>...
+      --ignore-file <IGNORE_FILE>
+      --quiet                        Surpress output
+      --no-colors                    will not format into ansi string and / or include colors
+  -h, --help                         Print help
+  -V, --version                      Print version
 ```
 
+## Output
+
+In Addition to the standard text output the program will return **42** if there are any differences between the directories and **0** in case of them being identical. This can be handy when calling this tool from other programs.

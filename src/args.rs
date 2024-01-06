@@ -8,10 +8,10 @@ use clap::*;
 #[derive(Parser)]
 #[clap(author, version, about = "A cli tool to compare two directories", long_about)]
 pub struct Args {
-    #[clap(value_parser)]
+    #[clap(value_parser, value_name = "dir a")]
     pub dir_a: PathBuf,
 
-    #[clap(value_parser)]
+    #[clap(value_parser, value_name = "dir b")]
     pub dir_b: PathBuf,
 
     #[clap(long = "ignore", value_parser, use_value_delimiter(true), value_delimiter = ' ', num_args=1..)]
@@ -20,6 +20,11 @@ pub struct Args {
     #[clap(long = "ignore-file", value_parser)]
     pub ignore_file: Option<PathBuf>,
 
+    /// Surpress output
+    #[clap(long = "quiet", value_parser)]
+    pub quiet: bool,
+
+    /// will not format into ansi string and / or include colors
     #[clap(long = "no-colors", value_parser)]
     pub no_colors: bool,
 }

@@ -143,6 +143,12 @@ impl CmpResult {
                     only_in_b: Vec::new(),
                     differs: Vec::new() }
     }
+    pub fn are_different(&self) -> bool {
+        if self.only_in_a.is_empty() && self.only_in_b.is_empty() && self.differs.is_empty() {
+            return false;
+        }
+        true
+    }
     pub fn format_text(&self, ansi: bool) -> Vec<String> {
         let bold = Style::new().bold();
         let bold_underline = bold.underline();
@@ -150,7 +156,7 @@ impl CmpResult {
         let mut result_plain: Vec<String> = Vec::new();
 
         println!();
-        if self.only_in_a.is_empty() && self.only_in_b.is_empty() && self.differs.is_empty() {
+        if !self.are_different() {
             let message = format!("The directories appear to be the same\n"); 
             let styled_message = bold.
                 paint(&message);

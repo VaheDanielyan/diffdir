@@ -1,11 +1,9 @@
 extern crate diffdir;
-
-use core::panic;
-use atty::Stream;
-
 use diffdir::diffcmp::{DirCmp, CmpResult};
 use diffdir::args::Args;
 
+use core::panic;
+use atty::Stream;
 use clap::Parser;
 
 fn main() {
@@ -32,12 +30,16 @@ fn main() {
 
     let dir_comparator = DirCmp::new(&args.dir_a, &args.dir_b, &merged_patterns);
     let result: CmpResult  = dir_comparator.compare_directories();
-    let text = if atty::is(Stream::Stdout) {
-        result.format_text(!args.no_colors)
-    } else {
-        result.format_text(false)
-    };
-    for item in text {
-        print!("{}", item);
+    if !args.quiet {
+        let text = if atty::is(Stream::Stdout) {
+            result.format_text(!args.no_colors)
+        } else {
+            result.format_text(false)
+        };
+
+        for item in text {
+            print!("{}", item);
+        }
     }
+    if result.are_different() { std::process::exit(42) }
 }
