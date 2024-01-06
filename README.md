@@ -1,4 +1,4 @@
-![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) ![crates io](https://img.shields.io/crates/v/diffdir)
+![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) ![https://google.com](https://img.shields.io/crates/v/diffdir)
 
 # Diffdir
 
