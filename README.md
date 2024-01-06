@@ -1,4 +1,4 @@
-![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) ![https://google.com](https://img.shields.io/crates/v/diffdir?link=https%3A%2F%2Fcrates.io%2Fcrates%2Fdiffdir) ![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)
+![build status](https://github.com/VaheDanielyan/dirdiff.rs/actions/workflows/rust.yml/badge.svg) [![crates-io](https://img.shields.io/crates/v/diffdir?link=https%3A%2F%2Fcrates.io%2Fcrates%2Fdiffdir)](https://crates.io/crates/diffdir) ![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)
 # Diffdir
 
 A command line tool to compare two directories. 
